@@ -1,73 +1,75 @@
 import { useState } from 'react';
-import { Box, Typography, TextField, Button, Card, CardContent, CircularProgress, InputAdornment, Chip, IconButton } from '@mui/material';
+import { Box, Typography, TextField, Button, Card, CardContent, CircularProgress, InputAdornment, Chip, IconButton, alpha, useTheme } from '@mui/material';
 import { Search, GppBad, GppGood, Clear } from '@mui/icons-material';
 
-type ScanResult = {
-  isSafe: boolean;
-  message: string;
-  details: string;
-} | null;
-
 export const Scanner = () => {
+  const theme = useTheme();
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState<ScanResult>(null);
+  const [result, setResult] = useState<any>(null);
 
-  const handleScan = () => {
+  const handleScan = async () => {
     if (!inputValue.trim()) return;
     setIsLoading(true);
     setResult(null);
 
-    setTimeout(() => {
-      const isSuspicious = inputValue.includes('gratis') || inputValue.includes('promocao') || inputValue.includes('bit.ly');
-      setResult({
-        isSafe: !isSuspicious,
-        message: isSuspicious ? 'Ameaça Detectada!' : 'Parece Seguro',
-        details: isSuspicious ? 'Este link apresenta padrões comuns de phishing ou golpes. Recomendamos não acessar.' : 'Não encontramos registros maliciosos para este link nas nossas bases de dados.',
+    try {
+      const response = await fetch('http://localhost:3333/api/scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: inputValue }),
       });
+      const data = await response.json();
+      setResult(data);
+    } catch (err) {
+      console.error(err);
+      setResult({ isSafe: false, message: 'Erro de Conexão', details: 'Verifique se o backend está rodando.' });
+    } finally {
       setIsLoading(false);
-    }, 2000); 
-  };
-
-  const handleClear = () => {
-    setInputValue('');
-    setResult(null);
+    }
   };
 
   return (
     <Box sx={{ maxWidth: 600, mx: 'auto', textAlign: 'center' }}>
-      <Typography variant="h4" fontWeight="700" gutterBottom sx={{ mt: { xs: 2, md: 4 } }}>Verificador de Links</Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 5 }}>Cole abaixo aquele link suspeito que você recebeu no WhatsApp ou SMS. Nossa IA vai analisar se é um golpe.</Typography>
+      <Typography variant="h4" fontWeight="800" gutterBottom>Verificador de Links</Typography>
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>Analise URLs suspeitas em tempo real.</Typography>
 
-      <Card sx={{ p: { xs: 2, md: 3 }, borderRadius: 4, bgcolor: 'background.paper', boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}>
+      <Card sx={{ p: 2, borderRadius: 4, bgcolor: 'background.paper' }}>
         <TextField
           fullWidth
           variant="outlined"
-          placeholder="Ex: https://promocao-imperdivel.com/premio"
+          placeholder="Cole a URL aqui..."
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          disabled={isLoading}
-          sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3, bgcolor: 'background.default' } }}
+          onKeyPress={(e) => e.key === 'Enter' && handleScan()}
           InputProps={{
             startAdornment: <InputAdornment position="start"><Search color="primary" /></InputAdornment>,
             endAdornment: inputValue && (
               <InputAdornment position="end">
-                <IconButton onClick={handleClear} edge="end" disabled={isLoading}><Clear /></IconButton>
+                <IconButton onClick={() => { setInputValue(''); setResult(null); }}><Clear /></IconButton>
               </InputAdornment>
             )
           }}
+          sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
         />
-        <Button fullWidth variant="contained" size="large" onClick={handleScan} disabled={!inputValue.trim() || isLoading} sx={{ mt: 3, borderRadius: 3, py: 1.5, fontSize: '1.1rem' }}>
-          {isLoading ? <CircularProgress size={26} color="inherit" /> : 'Analisar Link'}
+        <Button 
+          fullWidth 
+          variant="contained" 
+          size="large" 
+          onClick={handleScan} 
+          disabled={isLoading || !inputValue}
+          sx={{ mt: 2, borderRadius: 3, py: 1.5 }}
+        >
+          {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Analisar Agora'}
         </Button>
       </Card>
 
       {result && (
-        <Card sx={{ mt: 4, borderRadius: 4, border: '1px solid', borderColor: result.isSafe ? 'success.main' : 'error.main', bgcolor: result.isSafe ? 'rgba(129, 201, 149, 0.05)' : 'rgba(242, 139, 130, 0.05)' }}>
-          <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
-            {result.isSafe ? <GppGood sx={{ fontSize: 64, color: 'success.main', mb: 2 }} /> : <GppBad sx={{ fontSize: 64, color: 'error.main', mb: 2 }} />}
-            <Chip label={result.message} color={result.isSafe ? 'success' : 'error'} sx={{ fontWeight: 'bold', mb: 2, px: 1 }} />
-            <Typography variant="body1" color="text.primary">{result.details}</Typography>
+        <Card sx={{ mt: 4, borderRadius: 4, border: '1px solid', borderColor: result.isSafe ? 'success.main' : 'error.main', bgcolor: alpha(result.isSafe ? theme.palette.success.main : theme.palette.error.main, 0.05) }}>
+          <CardContent sx={{ p: 4 }}>
+            {result.isSafe ? <GppGood sx={{ fontSize: 60, color: 'success.main' }} /> : <GppBad sx={{ fontSize: 60, color: 'error.main' }} />}
+            <Typography variant="h5" fontWeight="700" sx={{ mt: 2 }}>{result.message}</Typography>
+            <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>{result.details}</Typography>
           </CardContent>
         </Card>
       )}

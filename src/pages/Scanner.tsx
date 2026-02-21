@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Typography, TextField, Button, Card, CardContent, CircularProgress, InputAdornment, Chip, IconButton, alpha, useTheme } from '@mui/material';
+import { Box, Typography, TextField, Button, Card, CardContent, CircularProgress, InputAdornment, IconButton, alpha, useTheme } from '@mui/material';
 import { Search, GppBad, GppGood, Clear } from '@mui/icons-material';
 
 export const Scanner = () => {
@@ -8,13 +8,15 @@ export const Scanner = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3333';
+
   const handleScan = async () => {
     if (!inputValue.trim()) return;
     setIsLoading(true);
     setResult(null);
 
     try {
-      const response = await fetch('https://escudo-cidadao-api.onrender.com/api/scan', {
+      const response = await fetch(`${API_URL}/api/scan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: inputValue }),
@@ -22,8 +24,7 @@ export const Scanner = () => {
       const data = await response.json();
       setResult(data);
     } catch (err) {
-      console.error(err);
-      setResult({ isSafe: false, message: 'Erro de Conexão', details: 'Verifique se o backend está rodando.' });
+      setResult({ isSafe: false, message: 'Erro de Conexão', details: 'Verifique se a API está online.' });
     } finally {
       setIsLoading(false);
     }
@@ -32,7 +33,7 @@ export const Scanner = () => {
   return (
     <Box sx={{ maxWidth: 600, mx: 'auto', textAlign: 'center' }}>
       <Typography variant="h4" fontWeight="800" gutterBottom>Verificador de Links</Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>Analise URLs suspeitas em tempo real.</Typography>
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>Analise URLs em tempo real.</Typography>
 
       <Card sx={{ p: 2, borderRadius: 4, bgcolor: 'background.paper' }}>
         <TextField
@@ -42,6 +43,15 @@ export const Scanner = () => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && handleScan()}
+          sx={{ 
+            '& .MuiOutlinedInput-root': { borderRadius: 3 },
+            // MÁGICA PARA REMOVER O FUNDO AZUL DO NAVEGADOR
+            '& .MuiInputBase-input:-webkit-autofill': {
+                WebkitBoxShadow: `0 0 0 1000px ${theme.palette.background.paper} inset`,
+                WebkitTextFillColor: theme.palette.text.primary,
+                borderRadius: 'inherit',
+            }
+          }}
           InputProps={{
             startAdornment: <InputAdornment position="start"><Search color="primary" /></InputAdornment>,
             endAdornment: inputValue && (
@@ -50,15 +60,10 @@ export const Scanner = () => {
               </InputAdornment>
             )
           }}
-          sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
         />
         <Button 
-          fullWidth 
-          variant="contained" 
-          size="large" 
-          onClick={handleScan} 
-          disabled={isLoading || !inputValue}
-          sx={{ mt: 2, borderRadius: 3, py: 1.5 }}
+          fullWidth variant="contained" size="large" onClick={handleScan} 
+          disabled={isLoading || !inputValue} sx={{ mt: 2, borderRadius: 3, py: 1.5 }}
         >
           {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Analisar Agora'}
         </Button>

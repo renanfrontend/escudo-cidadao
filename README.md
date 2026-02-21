@@ -1,10 +1,12 @@
 # 🛡️ Escudo Cidadão
 
-Um aplicativo B2C focado em democratizar a cibersegurança e proteger o cidadão comum contra fraudes digitais diárias (phishing, fugas de dados e links maliciosos).
+Um aplicativo B2C focado em democratizar a cibersegurança e proteger o cidadão comum contra fraudes digitais diárias (phishing, vazamentos de dados e links maliciosos).
+
+🟢 **Live Demo:** [https://escudo-cidadao.netlify.app/](https://escudo-cidadao.netlify.app/)
 
 ## 🚀 O Projeto
 
-O **Escudo Cidadão** atua como um assistente de segurança pessoal. O objetivo principal do MVP (Minimum Viable Product) é permitir que utilizadores verifiquem links suspeitos recebidos por WhatsApp/SMS e monitorizem a integridade dos seus dados pessoais, tudo com uma interface intuitiva, layout responsivo mobile-first e um dark mode premium.
+O **Escudo Cidadão** atua como um assistente de segurança pessoal. O objetivo principal do MVP (Minimum Viable Product) é permitir que usuários leigos verifiquem links suspeitos recebidos por WhatsApp/SMS e monitorem a integridade de seus dados pessoais, tudo com uma interface intuitiva, layout responsivo mobile-first e um dark mode premium.
 
 ### 🛠️ Tech Stack
 
@@ -14,15 +16,16 @@ O **Escudo Cidadão** atua como um assistente de segurança pessoal. O objetivo 
 - **Layout:** CSS Grid Nativo & Flexbox
 - **Roteamento:** React Router DOM
 - **Ícones:** Material Icons
+- **Deploy:** Netlify
 
-## 🗺️ Progresso das Jornadas (MVP)
+## 🗺️ Progresso das Jornadas (MVP Concluído! 🎉)
 
-- [x] **Painel Operacional:** Dashboard responsivo com Score de Segurança em tempo real e log de atividades.
-- [x] **Verificação (Scanner):** Motor de verificação de links suspeitos com simulação de *Threat Intelligence*.
-- [ ] **Monitorização:** Dashboard de fugas de credenciais na Dark Web.
-- [ ] **Configurações:** Gestão de conta, alertas e privacidade.
+- [x] **Painel Operacional:** Dashboard responsivo com Score de Segurança em tempo real e log de últimas atividades.
+- [x] **Verificação (Scanner):** Motor de verificação de links suspeitos com simulação de *Threat Intelligence* e UI amigável.
+- [x] **Monitoramento:** Dashboard de vazamento de credenciais na Dark Web com barra de pesquisa unificada e correção de autofill nativo.
+- [x] **Configurações:** Gerenciamento de conta, alertas, privacidade e perfil dinâmico com integração de Avatar do GitHub.
 
-## 💻 Como Executar Localmente
+## 💻 Como Rodar Localmente
 
 1. Clone o repositório:
    ```bash
@@ -47,9 +50,9 @@ O **Escudo Cidadão** atua como um assistente de segurança pessoal. O objetivo 
 
 Desenvolvido com 💜 por **Renan**
 
-Gostou do projeto? Tem uma ideia inovadora e precisa de um Desenvolvedor Front-end Sénior para a tirar do papel? **Vamos conversar!**
+Gostou do projeto? Tem uma ideia inovadora e precisa de um Desenvolvedor Front-end Sênior para a tirar do papel? **Vamos conversar!**
 
-[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/5511965781243?text=Ol%C3%A1%20Renan!%20Achei%20incr%C3%ADvel%20o%20projeto%20Escudo%20Cidad%C3%A3o.%20Gostaria%20de%20conversar%20sobre%20o%20desenvolvimento%20de%20um%20aplicativo%20e%20solicitar%20um%20or%C3%A7amento.)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/5511999999999?text=Ol%C3%A1%20Renan!%20Achei%20incr%C3%ADvel%20o%20projeto%20Escudo%20Cidad%C3%A3o.%20Gostaria%20de%20conversar%20sobre%20o%20desenvolvimento%20de%20um%20aplicativo%20e%20solicitar%20um%20or%C3%A7amento.)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/renan-augusto-santos)
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/renanfrontend)
 [![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/renanbrocanelli.dev)

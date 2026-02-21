@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 import { Typography, Box } from '@mui/material';
 import { DashboardLayout } from './layouts/DashboardLayout';
-import { Scanner } from './pages/Scanner'; // Importamos a nossa nova tela!
+import { Scanner } from './pages/Scanner';
+import { Dashboard } from './pages/Dashboard'; // Importamos a Home!
 
-// Placeholder para as telas que ainda não criamos
 const Placeholder = ({ title }: { title: string }) => (
   <Box>
     <Typography variant="h4" color="primary" gutterBottom fontWeight="bold">{title}</Typography>
     <Typography variant="body1" color="text.secondary">
-      Esta jornada está em construção. Em breve você poderá interagir com os componentes reais aqui.
+      Esta jornada está em construção.
     </Typography>
   </Box>
 );
@@ -17,11 +17,10 @@ function App() {
   return (
     <DashboardLayout>
       <Routes>
-        <Route path="/" element={<Placeholder title="Painel Operacional" />} />
+        {/* Agora a rota "/" aponta pro nosso Painel Operacional! */}
+        <Route path="/" element={<Dashboard />} /> 
         
-        {/* Usando o componente real aqui! */}
-        <Route path="/scanner" element={<Scanner />} /> 
-        
+        <Route path="/scanner" element={<Scanner />} />
         <Route path="/monitoramento" element={<Placeholder title="Monitoramento de Vazamentos" />} />
         <Route path="/configuracoes" element={<Placeholder title="Configurações" />} />
       </Routes>

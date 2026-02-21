@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box, Drawer, AppBar, Toolbar, Typography, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, useTheme, useMediaQuery } from '@mui/material';
 import { Dashboard, Shield, NotificationsActive, Settings, Menu as MenuIcon } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Footer } from '../components/Footer';
 
 const drawerWidth = 260;
 
@@ -123,8 +124,25 @@ export const DashboardLayout = ({ children }: { children: React.ReactNode }) => 
       </Box>
 
       {/* Área Principal de Conteúdo */}
-      <Box component="main" sx={{ flexGrow: 1, p: { xs: 2, md: 4 }, pt: { xs: 10, md: 12 }, width: { md: `calc(100% - ${drawerWidth}px)` } }}>
-        {children}
+      <Box 
+        component="main" 
+        sx={{ 
+          display: 'flex',
+          flexDirection: 'column',
+          flexGrow: 1, 
+          minHeight: '100vh',
+          p: { xs: 2, md: 4 }, 
+          pt: { xs: 10, md: 12 }, 
+          width: { md: `calc(100% - ${drawerWidth}px)` } 
+        }}
+      >
+        {/* O children cresce para empurrar o footer pra baixo */}
+        <Box sx={{ flexGrow: 1 }}>
+          {children}
+        </Box>
+
+        {/* Nosso novo Footer! */}
+        <Footer />
       </Box>
     </Box>
   );

@@ -12,14 +12,17 @@ export const theme = createTheme({
       main: '#c58af9', // Roxo vibrante (vibe IA)
     },
     error: {
-      main: '#f28b82', // Vermelho mais suave, compatível com Dark Mode
+      main: '#f28b82',
+    },
+    success: {
+      main: '#81c995', // Verde premium
     },
     background: {
-      default: '#131314', // Fundo super escuro padrão Gemini
+      default: '#131314', // Fundo super escuro
       paper: '#1e1f20',   // Fundo dos cards/menus
     },
     text: {
-      primary: '#e3e3e3', // Branco levemente suave para não cansar a vista
+      primary: '#e3e3e3', 
       secondary: '#c4c7c5',
     }
   },
@@ -31,13 +34,13 @@ export const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 16, // Bordas mais arredondadas (moderno B2C)
+    borderRadius: 16, 
   },
   components: {
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          borderRight: 'none', // Remove a borda dura
+          borderRight: 'none',
           backgroundImage: 'none',
         },
       },
@@ -46,7 +49,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundImage: 'none',
-          backgroundColor: '#131314', // Mantém o header integrado com o fundo
+          backgroundColor: '#131314',
           borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
         },
       },
